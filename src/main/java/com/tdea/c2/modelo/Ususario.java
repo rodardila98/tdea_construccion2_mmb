@@ -11,4 +11,6 @@ public class Ususario {
 	private String correo;
 	private int numCel;
 	
+	
+	
 }
