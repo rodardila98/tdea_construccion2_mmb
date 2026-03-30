@@ -1,4 +1,4 @@
-package com.tdea.c2.modelo;
+package com.tdea.c2.mmb.modelo;
 
 import java.util.Date;
 
