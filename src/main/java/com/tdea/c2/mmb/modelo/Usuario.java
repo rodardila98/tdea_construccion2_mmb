@@ -1,5 +1,6 @@
 package com.tdea.c2.mmb.modelo;
 
+<<<<<<< HEAD:src/main/java/com/tdea/c2/mmb/modelo/Ususario.java
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -12,6 +13,9 @@ import jakarta.persistence.Table;
 public class Ususario {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+=======
+public class Usuario {
+>>>>>>> origin/dev:src/main/java/com/tdea/c2/mmb/modelo/Usuario.java
 
 	private String tipoDocumento;
 	private int numDocumento;
@@ -22,7 +26,7 @@ public class Ususario {
 	private String correo;
 	private int numCel;
 	
-	public Ususario(String tipoDocumento, int numDocumento, String nombreCompleto, String direccion, String barrio,
+	public Usuario(String tipoDocumento, int numDocumento, String nombreCompleto, String direccion, String barrio,
 			String ciudad, String correo, int numCel) {
 		this.tipoDocumento = tipoDocumento;
 		this.numDocumento = numDocumento;
