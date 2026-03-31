@@ -1,6 +1,17 @@
 package com.tdea.c2.mmb.modelo;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "servicio")
+
 public class Tecnico {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	
 	private String tipoDocumento;
 	private int numDocumento;

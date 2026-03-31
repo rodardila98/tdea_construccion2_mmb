@@ -1,8 +1,18 @@
 package com.tdea.c2.mmb.modelo;
 
 import java.util.Date;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "Logs")
 
 public class LogsServicios extends Servicio{
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	
 	private int idHistorial;
 	private Date fechaModificacion;
