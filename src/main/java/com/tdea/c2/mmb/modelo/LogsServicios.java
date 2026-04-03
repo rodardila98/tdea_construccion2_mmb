@@ -13,7 +13,7 @@ import jakarta.persistence.Table;
 public class LogsServicios extends Servicio{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	
+
 	private int idHistorial;
 	private Date fechaModificacion;
 

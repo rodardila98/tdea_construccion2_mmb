@@ -13,8 +13,8 @@ public class Tecnico {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	
-	private String tipoDocumento;
 	private int numDocumento;
+	private String tipoDocumento;
 	private String nombreCompleto;
 	private int numCel;
 	private String especialidad;

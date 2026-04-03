@@ -11,10 +11,10 @@ import jakarta.persistence.Table;
 
 public class Equipo {
 	@Id //id unico para la tabla PK
-	
 	//genera el id automaticamente de manera incremental
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	
+	private String serial;
 	private String marca;
 	private String modelo;
 	private String tipo;
