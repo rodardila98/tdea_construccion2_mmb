@@ -21,6 +21,10 @@ public class Servicio {
 	private String tipoServicio;
 	private String estadoServicio;
 	
+	// Constructor vacío (requerido por JPA)
+	public Servicio() {
+	}
+	
 	public Servicio(int idServicio, Date fechaServicio, String horaServicio, String tipoServicio,
 			String estadoServicio) {
 		this.idServicio = idServicio;
@@ -30,6 +34,7 @@ public class Servicio {
 		this.estadoServicio = estadoServicio;
 	}
 	
+	// Getters y Setters
 	public int getIdServicio() {
 		return idServicio;
 	}

@@ -1,10 +1,13 @@
 package com.tdea.c2.mmb.repository;
 
 import com.tdea.c2.mmb.modelo.Equipo;
-import java.util.List;
 
-public interface IEquipoRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-	List<Equipo> findAll();
+@Repository
+public interface IEquipoRepository extends JpaRepository<Equipo, Long> {
+
+
 
 }

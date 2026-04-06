@@ -12,7 +12,7 @@ public class Equipo {
 	
 	@Id // Id unico para la tabla PK
 	@GeneratedValue(strategy = GenerationType.IDENTITY) // Genera el id automaticamente de manera incremental
-	private String serial;
+	private Long serial;
 	
 	private String marca;
 	private String modelo;
