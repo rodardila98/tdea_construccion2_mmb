@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.tdea.c2.mmb.modelo.LogsServicios;
+import com.tdea.c2.mmb.modelo.Servicio;
 
 @Repository
 public interface ILogsServicioRepository extends JpaRepository<LogsServicios, Integer> {

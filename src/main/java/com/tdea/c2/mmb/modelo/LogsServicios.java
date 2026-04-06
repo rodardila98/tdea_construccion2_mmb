@@ -1,6 +1,6 @@
 package com.tdea.c2.mmb.modelo;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -9,29 +9,30 @@ import jakarta.persistence.Table;
 import jakarta.persistence.ForeignKey;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Column;
 
 @Entity
 @Table(name = "logs_servicios")
 public class LogsServicios {
 	
-	//@Id
-	//@GeneratedValue(strategy = GenerationType.IDENTITY)
-	//private int idHistorial;
 	@Id
-	@ManyToOne
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer idHistorial;
+
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "id_servicio", nullable = false, foreignKey = @ForeignKey(name = "fk_servicio"))
 	private Servicio servicio;
 	
 	// Estado completo del servicio en ese momento
-	private Date fechaServicio;
+	private LocalDateTime fechaServicio;
 	private String horaServicio;
 	private String tipoServicio;
 	private String estadoServicio;
 	
 	// Metadatos
 	@Column(nullable = false)
-	private Date fechaModificacion;
+	private LocalDateTime fechaModificacion;
 	
 	// Constructor vacío (requerido por JPA)
 	public LogsServicios() {
@@ -44,16 +45,16 @@ public class LogsServicios {
 		this.horaServicio = servicio.getHoraServicio();
 		this.tipoServicio = servicio.getTipoServicio();
 		this.estadoServicio = servicio.getEstadoServicio();
-		this.fechaModificacion = new Date();
+		this.fechaModificacion = LocalDateTime.now();
 	}
 	
 	// Getters y Setters
-	//public int getIdHistorial() {
-		//return idHistorial;
-	//}
-	//public void setIdHistorial(int idHistorial) {
-		//this.idHistorial = idHistorial;
-	//}
+	public Integer getIdHistorial() {
+		return idHistorial;
+	}
+	public void setIdHistorial(Integer idHistorial) {
+		this.idHistorial = idHistorial;
+	}
 	
 	public Servicio getServicio() {
 		return servicio;
@@ -62,10 +63,10 @@ public class LogsServicios {
 		this.servicio = servicio;
 	}
 	
-	public Date getFechaServicio() {
+	public LocalDateTime getFechaServicio() {
 		return fechaServicio;
 	}
-	public void setFechaServicio(Date fechaServicio) {
+	public void setFechaServicio(LocalDateTime fechaServicio) {
 		this.fechaServicio = fechaServicio;
 	}
 	
@@ -90,10 +91,10 @@ public class LogsServicios {
 		this.estadoServicio = estadoServicio;
 	}
 	
-	public Date getFechaModificacion() {
+	public LocalDateTime getFechaModificacion() {
 		return fechaModificacion;
 	}
-	public void setFechaModificacion(Date fechaModificacion) {
+	public void setFechaModificacion(LocalDateTime fechaModificacion) {
 		this.fechaModificacion = fechaModificacion;
 	}
 	
