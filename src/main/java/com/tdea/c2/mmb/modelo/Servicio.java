@@ -1,6 +1,6 @@
 package com.tdea.c2.mmb.modelo;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -16,7 +16,7 @@ public class Servicio {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idServicio;
 	
-	private Date fechaServicio;
+	private LocalDateTime fechaServicio;
 	private String horaServicio;
 	private String tipoServicio;
 	private String estadoServicio;
@@ -25,7 +25,7 @@ public class Servicio {
 	public Servicio() {
 	}
 	
-	public Servicio(int idServicio, Date fechaServicio, String horaServicio, String tipoServicio,
+	public Servicio(int idServicio, LocalDateTime fechaServicio, String horaServicio, String tipoServicio,
 			String estadoServicio) {
 		this.idServicio = idServicio;
 		this.fechaServicio = fechaServicio;
@@ -41,10 +41,10 @@ public class Servicio {
 	public void setIdServicio(int idServicio) {
 		this.idServicio = idServicio;
 	}
-	public Date getFechaServicio() {
+	public LocalDateTime getFechaServicio() {
 		return fechaServicio;
 	}
-	public void setFechaServicio(Date fechaServicio) {
+	public void setFechaServicio(LocalDateTime fechaServicio) {
 		this.fechaServicio = fechaServicio;
 	}
 	public String getHoraServicio() {
