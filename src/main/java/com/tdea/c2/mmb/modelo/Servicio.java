@@ -10,19 +10,16 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "servicio")
-
 public class Servicio {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	
 	private int idServicio;
+	
 	private Date fechaServicio;
 	private String horaServicio;
 	private String tipoServicio;
 	private String estadoServicio;
-	
-	
-	
 	
 	public Servicio(int idServicio, Date fechaServicio, String horaServicio, String tipoServicio,
 			String estadoServicio) {
@@ -32,7 +29,6 @@ public class Servicio {
 		this.tipoServicio = tipoServicio;
 		this.estadoServicio = estadoServicio;
 	}
-	
 	
 	public int getIdServicio() {
 		return idServicio;
@@ -65,6 +61,4 @@ public class Servicio {
 		this.estadoServicio = estadoServicio;
 	}
 	
-	
-
 }

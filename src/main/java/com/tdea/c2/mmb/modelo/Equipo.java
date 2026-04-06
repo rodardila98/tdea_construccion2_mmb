@@ -6,15 +6,14 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
-@Entity //convierte la clase en tabla
-@Table(name = "equipo") //nombre de la tabla
-
+@Entity // Convierte la clase en tabla
+@Table(name = "equipo") // Nombre de la tabla
 public class Equipo {
-	@Id //id unico para la tabla PK
-	//genera el id automaticamente de manera incremental
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	
+	@Id // Id unico para la tabla PK
+	@GeneratedValue(strategy = GenerationType.IDENTITY) // Genera el id automaticamente de manera incremental
 	private String serial;
+	
 	private String marca;
 	private String modelo;
 	private String tipo;
@@ -48,7 +47,5 @@ public class Equipo {
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
 	}
-	
-	
 
 }

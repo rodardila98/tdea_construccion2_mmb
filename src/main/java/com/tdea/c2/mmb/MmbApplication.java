@@ -8,10 +8,10 @@ import org.springframework.boot.persistence.autoconfigure.EntityScan; //Permite 
 @EnableJpaAuditing
 @EntityScan("com.tdea.c2.mmb.modelo")
 
-
 public class MmbApplication {
 
 	public static void main(String[] args) {
+		
 		//Permite la ejecución del SpringApplication
 		SpringApplication.run(MmbApplication.class, args);
 	}

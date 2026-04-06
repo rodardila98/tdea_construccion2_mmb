@@ -9,12 +9,12 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "Logs")
-
-public class LogsServicios extends Servicio{
+public class LogsServicios extends Servicio {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-
 	private int idHistorial;
+	
 	private Date fechaModificacion;
 
 	// Constructor con sólo los atributos de la clase padre

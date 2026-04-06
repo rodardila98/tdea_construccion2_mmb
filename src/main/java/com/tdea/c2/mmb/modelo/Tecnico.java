@@ -8,12 +8,12 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "servicio")
-
 public class Tecnico {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	
 	private int numDocumento;
+	
 	private String tipoDocumento;
 	private String nombreCompleto;
 	private int numCel;
@@ -29,7 +29,6 @@ public class Tecnico {
 		this.especialidad = especialidad;
 		this.estadoServicio = estadoServicio;
 	}
-	
 	
 	public String gettipoDocumento() {
 		return tipoDocumento;

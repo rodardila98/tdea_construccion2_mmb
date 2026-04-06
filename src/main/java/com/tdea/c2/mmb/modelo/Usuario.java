@@ -9,13 +9,12 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "usuario")
-
-
 public class Usuario {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-
 	private int numDocumento;
+	
 	private String tipoDocumento;
 	private String nombreCompleto;
 	private String direccion;
@@ -99,7 +98,5 @@ public class Usuario {
 	public void setNumCel(int numCel) {
 		this.numCel = numCel;
 	}
-	
-	
 	
 }
