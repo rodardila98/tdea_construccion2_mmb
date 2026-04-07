@@ -10,6 +10,4 @@ import com.tdea.c2.mmb.modelo.Servicio;
 @Repository
 public interface IServicioRepository extends JpaRepository<Servicio, Integer> {
 
-	List<Servicio> findAll();
-
 }

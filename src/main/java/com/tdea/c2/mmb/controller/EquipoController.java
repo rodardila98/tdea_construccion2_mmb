@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,9 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.tdea.c2.mmb.modelo.Equipo;
 import com.tdea.c2.mmb.repository.IEquipoRepository;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
-
 @RestController
 @RequestMapping("/api")
 public class EquipoController {
@@ -25,21 +24,41 @@ public class EquipoController {
 	private IEquipoRepository equipoRepository;
 	
 	@GetMapping("/equipos")
-	public List<Equipo> getAllEquipos(){
+	public ResponseEntity<List<Equipo>> getAllEquipos(){
+		List<Equipo> equipos = equipoRepository.findAll();
 		
-		return equipoRepository.findAll();
+		if (equipos == null || equipos.isEmpty()) {
+			
+			// Muy básica: si no hay equipos, devolvemos 204 No Content
+			return ResponseEntity.noContent().build();
+		}
+		return ResponseEntity.ok(equipos);
 	}
 	
 	@GetMapping("/equipos/{id}")
-	public Optional<Equipo> getEquipoById(@PathVariable("id") Long id){
-		
-		return equipoRepository.findById(id);
+	public ResponseEntity<Equipo> getEquipoById(@PathVariable("id") Long id){
+		Optional<Equipo> opt = equipoRepository.findById(id);
+		// Muy básica: si no existe, devolvemos 404 Not Found
+		return ResponseEntity.of(opt);
 	}
 	
 	@PostMapping("/equipos")
-	public Equipo createEquipo(@RequestBody Equipo equipo) {
-		
-		return equipoRepository.save(equipo);
+	public ResponseEntity<?> createEquipo(@RequestBody Equipo equipo) {
+		// Validaciones muy básicas
+		if (equipo == null) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Equipo no puede ser nulo");
+		}
+		if (equipo.getMarca() == null || equipo.getMarca().trim().isEmpty()) {
+			
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Campo 'marca' es requerido");
+		}
+		if (equipo.getModelo() == null || equipo.getModelo().trim().isEmpty()) {
+			
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Campo 'modelo' es requerido");
+		}
+		// Si pasa las validaciones, guardamos y devolvemos 201 Created
+		Equipo saved = equipoRepository.save(equipo);
+		return ResponseEntity.status(HttpStatus.CREATED).body(saved);
 	}
 
 }
