@@ -18,10 +18,25 @@ public class Equipo {
 	private String modelo;
 	private String tipo;
 	
-	public Equipo(String marca, String modelo, String tipo) {
+	// Constructor vacio necesario para JPA
+	public Equipo() {
+		
+	}
+	
+	// Constructor con parametros
+	public Equipo(Long  serial, String marca, String modelo, String tipo) {
+		this.serial = serial;
 		this.marca = marca;
 		this.modelo = modelo;
 		this.tipo = tipo;
+	}
+	
+	public Long getSerial() {
+		return serial;
+	}
+	
+	public void setSerial(Long serial) {
+		this.serial = serial;
 	}
 	
 	public String getMarca() {
