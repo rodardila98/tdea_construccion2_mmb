@@ -36,7 +36,7 @@ public class ServicioController {
 	}
 	
 	@GetMapping("/servicios/{id}")
-	public ResponseEntity<Servicio> getServicioById(@PathVariable("id") int id) {
+	public ResponseEntity<Servicio> getServicioById(@PathVariable("id") Integer id) {
 		
 		Optional<Servicio> opt = servicioRepository.findById(id);
 		return ResponseEntity.of(opt);

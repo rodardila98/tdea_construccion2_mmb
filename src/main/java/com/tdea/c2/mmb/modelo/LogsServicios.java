@@ -1,5 +1,6 @@
 package com.tdea.c2.mmb.modelo;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -25,7 +26,7 @@ public class LogsServicios {
 	private Servicio servicio;
 	
 	// Estado completo del servicio en ese momento
-	private LocalDateTime fechaServicio;
+	private LocalDate fechaServicio;
 	private String horaServicio;
 	private String tipoServicio;
 	private String estadoServicio;
@@ -63,10 +64,10 @@ public class LogsServicios {
 		this.servicio = servicio;
 	}
 	
-	public LocalDateTime getFechaServicio() {
+	public LocalDate getFechaServicio() {
 		return fechaServicio;
 	}
-	public void setFechaServicio(LocalDateTime fechaServicio) {
+	public void setFechaServicio(LocalDate fechaServicio) {
 		this.fechaServicio = fechaServicio;
 	}
 	
