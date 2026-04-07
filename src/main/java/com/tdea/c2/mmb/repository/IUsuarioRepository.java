@@ -10,6 +10,4 @@ import com.tdea.c2.mmb.modelo.Usuario;
 @Repository
 public interface IUsuarioRepository extends JpaRepository<Usuario, Integer> {
 
-	List<Usuario> findAll();
-
 }

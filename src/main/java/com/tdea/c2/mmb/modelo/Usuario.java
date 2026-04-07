@@ -13,7 +13,7 @@ public class Usuario {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int numDocumento;
+	private Integer numDocumento;
 	
 	private String tipoDocumento;
 	private String nombreCompleto;
@@ -21,10 +21,14 @@ public class Usuario {
 	private String barrio;
 	private String ciudad;
 	private String correo;
-	private int numCel;
+	private Long numCel;
 	
-	public Usuario(String tipoDocumento, int numDocumento, String nombreCompleto, String direccion, String barrio,
-			String ciudad, String correo, int numCel) {
+	public Usuario() {
+		
+	}
+	
+	public Usuario(String tipoDocumento, Integer numDocumento, String nombreCompleto, String direccion, String barrio,
+			String ciudad, String correo, Long numCel) {
 		this.tipoDocumento = tipoDocumento;
 		this.numDocumento = numDocumento;
 		this.nombreCompleto = nombreCompleto;
@@ -43,11 +47,11 @@ public class Usuario {
 		this.tipoDocumento = tipoDocumento;
 	}
 	
-	public int getNumDocumento() {
+	public Integer getNumDocumento() {
 		return numDocumento;
 	}
 	
-	public void setNumDocumento(int numDocumento) {
+	public void setNumDocumento(Integer numDocumento) {
 		this.numDocumento = numDocumento;
 	}
 	
@@ -91,11 +95,11 @@ public class Usuario {
 		this.correo = correo;
 	}
 	
-	public int getNumCel() {
+	public Long getNumCel() {
 		return numCel;
 	}
 	
-	public void setNumCel(int numCel) {
+	public void setNumCel(Long numCel) {
 		this.numCel = numCel;
 	}
 	
