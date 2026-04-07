@@ -9,7 +9,4 @@ import com.tdea.c2.mmb.modelo.Tecnico;
 
 @Repository
 public interface ITecnicoRepository extends JpaRepository<Tecnico, Integer> {
-
-	List<Tecnico> findAll();
-
 }

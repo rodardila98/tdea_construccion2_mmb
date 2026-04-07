@@ -12,15 +12,19 @@ public class Tecnico {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int numDocumento;
+	private Integer numDocumento;
 	
 	private String tipoDocumento;
 	private String nombreCompleto;
-	private int numCel;
+	private Long numCel;
 	private String especialidad;
 	private String estadoServicio;
 	
-	public Tecnico(String tipoDocumento, int numDocumento, String nombreCompleto, int numCel, String especialidad, 
+	public Tecnico() {
+		
+	}
+	
+	public Tecnico(String tipoDocumento, Integer numDocumento, String nombreCompleto, Long numCel, String especialidad, 
 			String estadoServicio) {
 		this.tipoDocumento = tipoDocumento;
 		this.numDocumento = numDocumento;
@@ -30,40 +34,40 @@ public class Tecnico {
 		this.estadoServicio = estadoServicio;
 	}
 	
-	public String gettipoDocumento() {
+	public String getTipoDocumento() {
 		return tipoDocumento;
 	}
-	public void settipoDocuemtno(String tipoDocumento) {
+	public void setTipoDocumento(String tipoDocumento) {
 		this.tipoDocumento = tipoDocumento;
 	}
-	public int getnumDocumento() {
+	public Integer getNumDocumento() {
 		return numDocumento;
 	}
-	public void setnumDocumento(int numDocumento) {
+	public void setNumDocumento(Integer numDocumento) {
 		this.numDocumento = numDocumento;
 	}
-	public String getnombreCompleto() {
+	public String getNombreCompleto() {
 		return nombreCompleto;
 	}
-	public void setnombreCompleto(String nombreCompleto) {
+	public void setNombreCompleto(String nombreCompleto) {
 		this.nombreCompleto = nombreCompleto;
 	}
-	public int getnumCel() {
+	public Long getNumCel() {
 		return numCel;
 	}
-	public void setnumCel(int numCel) {
+	public void setNumCel(Long numCel) {
 		this.numCel = numCel;
 	}
-	public String getespecialidad() {
+	public String getEspecialidad() {
 		return especialidad;
 	}
-	public void setespecialidad(String especialidad) {
+	public void setEspecialidad(String especialidad) {
 		this.especialidad = especialidad;
 	}
-	public String getestadoServicio() {
+	public String getEstadoServicio() {
 		return estadoServicio;
 	}
-	public void setestadoServicio(String estadoServicio) {
+	public void setEstadoServicio(String estadoServicio) {
 		this.estadoServicio = estadoServicio;
 	}
 }

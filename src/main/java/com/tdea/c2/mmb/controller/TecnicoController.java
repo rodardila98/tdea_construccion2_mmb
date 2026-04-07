@@ -46,20 +46,16 @@ public class TecnicoController {
 	@PostMapping("/tecnicos")
 	public ResponseEntity<?> createTecnico(@RequestBody Tecnico tecnico) {
 		if (tecnico == null) {
-			
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Tecnico no puede ser nulo");
 		}
-		if (tecnico.getnombreCompleto() == null || tecnico.getnombreCompleto().trim().isEmpty()) {
-			
+		if (tecnico.getNombreCompleto() == null || tecnico.getNombreCompleto().trim().isEmpty()) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Campo 'nombreCompleto' es requerido");
 		}
-		if (tecnico.gettipoDocumento() == null || tecnico.gettipoDocumento().trim().isEmpty()) {
-			
+		if (tecnico.getTipoDocumento() == null || tecnico.getTipoDocumento().trim().isEmpty()) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Campo 'tipoDocumento' es requerido");
 		}
 		// numCel debe ser mayor que 0
-		if (tecnico.getnumCel() <= 0) {
-			
+		if (tecnico.getNumCel() == null || tecnico.getNumCel() <= 0) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Campo 'numCel' debe ser un número válido");
 		}
 		Tecnico saved = tecnicoRepository.save(tecnico);
