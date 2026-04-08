@@ -12,7 +12,6 @@ import jakarta.persistence.Table;
 public class Usuario {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer numDocumento;
 	
 	private String tipoDocumento;
