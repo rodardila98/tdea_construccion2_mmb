@@ -11,7 +11,6 @@ import jakarta.persistence.Table;
 public class Tecnico {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer numDocumento;
 	
 	private String tipoDocumento;
