@@ -62,7 +62,7 @@ public abstract class EquipoController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(saved);
 	}
 	
-	@PutMapping("/equipos")
+	@PutMapping("/equipos/{id}")
 	public ResponseEntity<Equipo> updateEquipo(@PathVariable("id")Long id, @RequestBody Equipo equipo) {
 		Equipo existente = equipoRepository.findById(id)
             .orElseThrow(() -> new RuntimeException("No encontrado"));
@@ -70,8 +70,7 @@ public abstract class EquipoController {
 		existente.setMarca(equipo.getMarca());
 		existente.setModelo(equipo.getModelo());
 		existente.setTipo(equipo.getTipo());
-
-    return ResponseEntity.ok(equipoRepository.save(existente));
+		return ResponseEntity.ok(equipoRepository.save(existente));
 }
 }
 
