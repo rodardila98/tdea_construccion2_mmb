@@ -28,6 +28,7 @@ public class Usuario {
 	
 	public Usuario(String tipoDocumento, Integer numDocumento, String nombreCompleto, String direccion, String barrio,
 			String ciudad, String correo, Long numCel) {
+		
 		this.tipoDocumento = tipoDocumento;
 		this.numDocumento = numDocumento;
 		this.nombreCompleto = nombreCompleto;
