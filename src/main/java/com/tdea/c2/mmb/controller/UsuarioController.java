@@ -9,10 +9,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.tdea.c2.mmb.modelo.Equipo;
 import com.tdea.c2.mmb.modelo.Usuario;
 import com.tdea.c2.mmb.repository.IUsuarioRepository;
 
@@ -68,6 +70,20 @@ public class UsuarioController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(saved);
 	}
 	
-	
-
+	@PutMapping("/usuarios/{id}")
+	public ResponseEntity<Usuario> updateUsuario(@PathVariable("id") Integer id, @RequestBody Usuario usuarios) {
+		Usuario existente = usuarioRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("No encontrado"));
+		existente.setTipoDocumento(usuarios.getTipoDocumento());
+		existente.setNumDocumento(usuarios.getNumDocumento());
+		existente.setNombreCompleto(usuarios.getNombreCompleto());
+		existente.setDireccion(usuarios.getDireccion());
+		existente.setBarrio(usuarios.getBarrio());
+		existente.setCiudad(usuarios.getCiudad());
+		existente.setCorreo(usuarios.getCorreo());
+		existente.setNumCel(usuarios.getNumCel());
+		return ResponseEntity.ok(usuarioRepository.save(existente));
+	}
+		
+		
 }
