@@ -67,6 +67,7 @@ public class UsuarioController {
 		Usuario saved = usuarioRepository.save(usuario);
 		return ResponseEntity.status(HttpStatus.CREATED).body(saved);
 	}
-
+	
+	
 
 }

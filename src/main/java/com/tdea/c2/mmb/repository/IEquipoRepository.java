@@ -5,7 +5,7 @@ import com.tdea.c2.mmb.modelo.Equipo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-@Repository
+@Repository //Tiene acceso a la base de datos para guardar, consultar y recuperar info
 public interface IEquipoRepository extends JpaRepository<Equipo, Long> {
 
 
