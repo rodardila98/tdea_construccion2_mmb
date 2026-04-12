@@ -9,11 +9,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tdea.c2.mmb.modelo.Tecnico;
+import com.tdea.c2.mmb.modelo.Usuario;
 import com.tdea.c2.mmb.repository.ITecnicoRepository;
 
 @RestController
@@ -62,4 +64,15 @@ public class TecnicoController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(saved);
 	}
 
+	@PutMapping("/tecnicos/{id}")
+	public ResponseEntity<Tecnico> updateTecnico(@PathVariable("id") Integer id, @RequestBody Tecnico tecnicos) {
+		Tecnico existente = tecnicoRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("No encontrado"));
+		existente.setTipoDocumento(tecnicos.getTipoDocumento());
+		existente.setNumDocumento(tecnicos.getNumDocumento());
+		existente.setNombreCompleto(tecnicos.getNombreCompleto());
+		existente.setNumCel(tecnicos.getNumCel());
+		existente.setEspecialidad(tecnicos.getEspecialidad());
+		existente.setEstadoServicio(tecnicos.estadoTecnico());
+		return ResponseEntity.ok(usuarioRepository.save(existente));
 }
