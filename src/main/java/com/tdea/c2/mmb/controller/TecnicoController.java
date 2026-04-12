@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tdea.c2.mmb.modelo.Tecnico;
-import com.tdea.c2.mmb.modelo.Usuario;
 import com.tdea.c2.mmb.repository.ITecnicoRepository;
 
 @RestController
