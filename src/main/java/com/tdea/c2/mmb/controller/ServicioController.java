@@ -9,11 +9,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tdea.c2.mmb.modelo.Servicio;
+import com.tdea.c2.mmb.modelo.Tecnico;
 import com.tdea.c2.mmb.repository.IServicioRepository;
 
 @RestController
@@ -63,5 +65,17 @@ public class ServicioController {
 		}
 		Servicio saved = servicioRepository.save(servicio);
 		return ResponseEntity.status(HttpStatus.CREATED).body(saved);
+	}
+	
+	@PutMapping("/servicios/{id}")
+	public ResponseEntity<Servicio> updateTecnico(@PathVariable("id") Integer id, @RequestBody Servicio servicios) {
+		Servicio existente = servicioRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("No encontrado"));
+		existente.setIdServicio(servicios.getIdServicio());
+		existente.setFechaServicio(servicios.getFechaServicio());
+		existente.setHoraServicio(servicios.getHoraServicio());
+		existente.setTipoServicio(servicios.getTipoServicio());
+		existente.setEstadoServicio(servicios.getEstadoServicio());
+		return ResponseEntity.ok(servicioRepository.save(existente));
 	}
 }
