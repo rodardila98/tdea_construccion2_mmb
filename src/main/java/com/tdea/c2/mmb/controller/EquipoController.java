@@ -19,7 +19,7 @@ import com.tdea.c2.mmb.repository.IEquipoRepository;
 
 @RestController //Cualquier método retorna en http json
 @RequestMapping("/api") //Asigna las solicitudes http a métodos dentro del controlador 
-public abstract class EquipoController {
+public class EquipoController {
 	
 	@Autowired //Crea un objeto @Repository en este caso y lo inyecta aquí
 	private IEquipoRepository equipoRepository;
