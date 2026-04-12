@@ -17,20 +17,20 @@ public class Tecnico {
 	private String nombreCompleto;
 	private Long numCel;
 	private String especialidad;
-	private String estadoServicio;
+	private String estadoTecnico;
 	
 	public Tecnico() {
 		
 	}
 	
 	public Tecnico(String tipoDocumento, Integer numDocumento, String nombreCompleto, Long numCel, String especialidad, 
-			String estadoServicio) {
+			String estadoTecnico) {
 		this.tipoDocumento = tipoDocumento;
 		this.numDocumento = numDocumento;
 		this.nombreCompleto = nombreCompleto;
 		this.numCel = numCel;
 		this.especialidad = especialidad;
-		this.estadoServicio = estadoServicio;
+		this.estadoTecnico = estadoTecnico;
 	}
 	
 	public String getTipoDocumento() {
@@ -64,9 +64,9 @@ public class Tecnico {
 		this.especialidad = especialidad;
 	}
 	public String getEstadoServicio() {
-		return estadoServicio;
+		return estadoTecnico;
 	}
-	public void setEstadoServicio(String estadoServicio) {
-		this.estadoServicio = estadoServicio;
+	public void setEstadoServicio(String estadoTecnico) {
+		this.estadoTecnico = estadoTecnico;
 	}
 }
