@@ -1,6 +1,7 @@
 package com.tdea.c2.mmb.controller;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -85,4 +87,17 @@ public class ServicioController {
 		servicioRepository.deleteById(id);
 		return ResponseEntity.noContent().build();
 } 
+	
+	@PatchMapping("/servicios/{id}")
+	public ResponseEntity<Servicio> updateEstadoServ(@PathVariable("id") Integer id, @RequestBody Map<String, Object> cambios) {
+		Servicio existente = servicioRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("No encontrado"));
+
+		if (cambios.containsKey("estadoServicio")) {
+        existente.setEstadoServicio((String) cambios.get("estadoServicio"));
+    }
+
+    return ResponseEntity.ok(servicioRepository.save(existente));
+
+	}
 }
