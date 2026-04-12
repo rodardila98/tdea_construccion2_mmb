@@ -73,7 +73,7 @@ public class TecnicoController {
 		existente.setNombreCompleto(tecnicos.getNombreCompleto());
 		existente.setNumCel(tecnicos.getNumCel());
 		existente.setEspecialidad(tecnicos.getEspecialidad());
-		existente.setEstadoTecnico(tecnicos.EstadoTecnico());
+		existente.setEstadoTecnico(tecnicos.getEstadoTecnico());
 		return ResponseEntity.ok(tecnicoRepository.save(existente));
 	}
 }
