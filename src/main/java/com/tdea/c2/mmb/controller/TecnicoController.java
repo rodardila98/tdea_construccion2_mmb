@@ -79,7 +79,7 @@ public class TecnicoController {
 	}
 	
 	@DeleteMapping("/tecnicos/{id}")
-	public ResponseEntity<Tecnico> deleteUsuario(@PathVariable("id")Integer id){
+	public ResponseEntity<Tecnico> deleteTecnico(@PathVariable("id")Integer id){
 		tecnicoRepository.deleteById(id);
 		return ResponseEntity.noContent().build();
 } 
