@@ -63,10 +63,10 @@ public class Tecnico {
 	public void setEspecialidad(String especialidad) {
 		this.especialidad = especialidad;
 	}
-	public String getEstadoServicio() {
+	public String getEstadoTecnico() {
 		return estadoTecnico;
 	}
-	public void setEstadoServicio(String estadoTecnico) {
+	public void setEstadoTecnico(String estadoTecnico) {
 		this.estadoTecnico = estadoTecnico;
 	}
 }
