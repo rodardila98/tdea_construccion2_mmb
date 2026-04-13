@@ -72,7 +72,7 @@ public class EquipoController {
 	}
 	
 	@PutMapping("/equipos/{id}")
-	public ResponseEntity<Equipo> updateEquipo(@PathVariable("id")Long id, @RequestBody Equipo equipo) {
+	public ResponseEntity<Equipo> updateEquipo(@PathVariable("id") Long id, @RequestBody Equipo equipo) {
 		Equipo existente = equipoRepository.findById(id)
             .orElseThrow(() -> new RuntimeException("No encontrado"));
 		existente.setSerial(equipo.getSerial());
@@ -83,8 +83,8 @@ public class EquipoController {
 	}
 	
 	@DeleteMapping("/equipos/{id}")
-	public ResponseEntity<Equipo> deleteEquipo(@PathVariable("id")Long id){
-		equipoRepository.deleteById(id);
+	public ResponseEntity<Equipo> deleteEquipo(@PathVariable("id") Long id){
+			equipoRepository.deleteById(id);
 		return ResponseEntity.noContent().build();
 		
 		

@@ -84,7 +84,7 @@ public class ServicioController {
 	
 	@DeleteMapping("/servicios/{id}")
 	public ResponseEntity<Servicio> deleteServicio(@PathVariable("id")Integer id){
-		servicioRepository.deleteById(id);
+			servicioRepository.deleteById(id);
 		return ResponseEntity.noContent().build();
 } 
 	
