@@ -21,7 +21,10 @@ public class LogsServicios {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer idHistorial;
 
+	// Relación con Servicio (muchos logs pueden referenciar a un mismo servicio)
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	
+	// El nombre de la columna en logs_servicios que referencia a servicio.idServicio
 	@JoinColumn(name = "id_servicio", nullable = false, foreignKey = @ForeignKey(name = "fk_servicio"))
 	private Servicio servicio;
 	
