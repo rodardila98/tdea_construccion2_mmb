@@ -50,6 +50,10 @@ public class EquipoController {
 		if (equipo == null) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Equipo no puede ser nulo");
 		}
+		if (equipo.getSerial() == null) {
+			
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Campo 'serial' es requerido");
+		}
 		if (equipo.getMarca() == null || equipo.getMarca().trim().isEmpty()) {
 			
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Campo 'marca' es requerido");
@@ -57,6 +61,10 @@ public class EquipoController {
 		if (equipo.getModelo() == null || equipo.getModelo().trim().isEmpty()) {
 			
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Campo 'modelo' es requerido");
+		}
+		if (equipo.getTipo() == null || equipo.getTipo().trim().isEmpty()) {
+			
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Campo 'tipo' es requerido");
 		}
 		// Si pasa las validaciones, guardamos y devolvemos 201 Created
 		Equipo saved = equipoRepository.save(equipo);
