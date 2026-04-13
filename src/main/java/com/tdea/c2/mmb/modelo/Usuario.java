@@ -13,7 +13,6 @@ public class Usuario {
 	
 	@Id
 	private Integer numDocumento;
-	
 	private String tipoDocumento;
 	private String nombreCompleto;
 	private String direccion;
