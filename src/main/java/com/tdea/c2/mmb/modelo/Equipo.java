@@ -16,6 +16,7 @@ public class Equipo {
 	private String marca;
 	private String modelo;
 	private String tipo;
+	private Usuario usuario; // Relacion con Usuario, un equipo tiene un usuario asignado
 	
 	// Constructor vacio necesario para JPA
 	public Equipo() {

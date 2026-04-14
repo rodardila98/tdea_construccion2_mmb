@@ -20,6 +20,7 @@ public class Servicio {
 	private String horaServicio;
 	private String tipoServicio;
 	private String estadoServicio;
+	private Equipo equipo; // Relacion con Equipo, un servicio tiene un equipo asignado
 	
 	// Constructor vacío (requerido por JPA)
 	public Servicio() {
