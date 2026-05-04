@@ -7,6 +7,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.JoinColumn;
 
 @Entity
 @Table(name = "servicio")
@@ -20,6 +22,9 @@ public class Servicio {
 	private String horaServicio;
 	private String tipoServicio;
 	private String estadoServicio;
+	
+	@ManyToOne
+	@JoinColumn(name = "serial")
 	private Equipo equipo; // Relacion con Equipo, un servicio tiene un equipo asignado
 	
 	// Constructor vacío (requerido por JPA)
@@ -65,6 +70,12 @@ public class Servicio {
 	}
 	public void setEstadoServicio(String estadoServicio) {
 		this.estadoServicio = estadoServicio;
+	}
+	public Equipo getEquipo() {
+		return equipo;
+	}
+	public void setEquipo(Equipo equipo) {
+		this.equipo = equipo;
 	}
 	
 }
