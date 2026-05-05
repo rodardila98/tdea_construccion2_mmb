@@ -2,7 +2,6 @@ package com.tdea.c2.mmb.controller;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,19 +17,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tdea.c2.mmb.modelo.Tecnico;
-import com.tdea.c2.mmb.repository.ITecnicoRepository;
+import com.tdea.c2.mmb.service.ITecnicoService;
 
 @RestController
 @RequestMapping("/api")
 public class TecnicoController {
 	
 	@Autowired
-	private ITecnicoRepository tecnicoRepository;
+	private ITecnicoService tecnicoService;
 	
 	@GetMapping("/tecnicos")
 	public ResponseEntity<List<Tecnico>> getAllTecnicos(){
 		
-		List<Tecnico> tecnicos = tecnicoRepository.findAll();
+		List<Tecnico> tecnicos = tecnicoService.getAllTecnicos();
 		
 		if (tecnicos == null || tecnicos.isEmpty()) {
 			
@@ -42,59 +41,46 @@ public class TecnicoController {
 	@GetMapping("/tecnicos/{id}")
 	public ResponseEntity<Tecnico> getTecnicoById(@PathVariable("id") int id) {
 		
-		Optional<Tecnico> opt = tecnicoRepository.findById(id);
-		
-		return ResponseEntity.of(opt);
+		return ResponseEntity.of(tecnicoService.getTecnicoById(id));
 	}
 	
 	@PostMapping("/tecnicos")
 	public ResponseEntity<?> createTecnico(@RequestBody Tecnico tecnico) {
-		if (tecnico == null) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Tecnico no puede ser nulo");
+		try {
+			Tecnico saved = tecnicoService.createTecnico(tecnico);
+			return ResponseEntity.status(HttpStatus.CREATED).body(saved);
+		} catch (IllegalArgumentException e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
 		}
-		if (tecnico.getNombreCompleto() == null || tecnico.getNombreCompleto().trim().isEmpty()) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Campo 'nombreCompleto' es requerido");
-		}
-		if (tecnico.getTipoDocumento() == null || tecnico.getTipoDocumento().trim().isEmpty()) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Campo 'tipoDocumento' es requerido");
-		}
-		// numCel debe ser mayor que 0
-		if (tecnico.getNumCel() == null || tecnico.getNumCel() <= 0) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Campo 'numCel' debe ser un número válido");
-		}
-		Tecnico saved = tecnicoRepository.save(tecnico);
-		return ResponseEntity.status(HttpStatus.CREATED).body(saved);
 	}
 
 	@PutMapping("/tecnicos/{id}")
 	public ResponseEntity<Tecnico> updateTecnico(@PathVariable("id") Integer id, @RequestBody Tecnico tecnicos) {
-		Tecnico existente = tecnicoRepository.findById(id)
-            .orElseThrow(() -> new RuntimeException("No encontrado"));
-		existente.setTipoDocumento(tecnicos.getTipoDocumento());
-		existente.setNumDocumento(tecnicos.getNumDocumento());
-		existente.setNombreCompleto(tecnicos.getNombreCompleto());
-		existente.setNumCel(tecnicos.getNumCel());
-		existente.setEspecialidad(tecnicos.getEspecialidad());
-		existente.setEstadoTecnico(tecnicos.getEstadoTecnico());
-		return ResponseEntity.ok(tecnicoRepository.save(existente));
+		try {
+			Tecnico updated = tecnicoService.updateTecnico(id, tecnicos);
+			return ResponseEntity.ok(updated);
+		} catch (RuntimeException e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+		}
 	}
 	
 	@DeleteMapping("/tecnicos/{id}")
 	public ResponseEntity<Tecnico> deleteTecnico(@PathVariable("id")Integer id){
-			tecnicoRepository.deleteById(id);
+		tecnicoService.deleteTecnico(id);
 		return ResponseEntity.noContent().build();
-} 
+	} 
 	
 	@PatchMapping("/tecnicos/{id}")
 	public ResponseEntity<Tecnico> updateEstadoTec(@PathVariable("id") Integer id, @RequestBody Map<String, Object> cambios) {
-		Tecnico existente = tecnicoRepository.findById(id)
-            .orElseThrow(() -> new RuntimeException("No encontrado"));
-
-		if (cambios.containsKey("estadoTecnico")) {
-        existente.setEstadoTecnico((String) cambios.get("estadoTecnico"));
-    }
-
-    return ResponseEntity.ok(tecnicoRepository.save(existente));
-
+		try {
+			if (cambios.containsKey("estadoTecnico")) {
+				String nuevoEstado = (String) cambios.get("estadoTecnico");
+				Tecnico updated = tecnicoService.updateEstadoTecnico(id, nuevoEstado);
+				return ResponseEntity.ok(updated);
+			}
+			return ResponseEntity.badRequest().build();
+		} catch (RuntimeException e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+		}
 	}
-	}
+}
