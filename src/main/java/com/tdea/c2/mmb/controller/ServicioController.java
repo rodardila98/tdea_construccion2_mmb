@@ -28,11 +28,9 @@ public class ServicioController {
 	
 	@GetMapping("/servicios")
 	public ResponseEntity<List<Servicio>> getAllServicios(){
-		
 		List<Servicio> servicios = servicioService.getAllServicios();
 		
 		if (servicios == null || servicios.isEmpty()) {
-			
 			return ResponseEntity.noContent().build();
 		}
 		return ResponseEntity.ok(servicios);
@@ -40,7 +38,6 @@ public class ServicioController {
 	
 	@GetMapping("/servicios/{id}")
 	public ResponseEntity<Servicio> getServicioById(@PathVariable("id") Integer id) {
-		
 		return ResponseEntity.of(servicioService.getServicioById(id));
 	}
 	
@@ -51,36 +48,40 @@ public class ServicioController {
 			return ResponseEntity.status(HttpStatus.CREATED).body(saved);
 		} catch (IllegalArgumentException e) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+		} catch (RuntimeException e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
 		}
 	}
 	
 	@PutMapping("/servicios/{id}")
-	public ResponseEntity<Servicio> updateTecnico(@PathVariable("id") Integer id, @RequestBody Servicio servicios) {
+	public ResponseEntity<?> updateServicio(@PathVariable("id") Integer id, @RequestBody Servicio servicios) {
 		try {
 			Servicio updated = servicioService.updateServicio(id, servicios);
 			return ResponseEntity.ok(updated);
+		} catch (IllegalArgumentException e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
 		} catch (RuntimeException e) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
 		}
 	}
 	
 	@DeleteMapping("/servicios/{id}")
-	public ResponseEntity<Servicio> deleteServicio(@PathVariable("id")Integer id){
+	public ResponseEntity<Servicio> deleteServicio(@PathVariable("id") Integer id){
 		servicioService.deleteServicio(id);
 		return ResponseEntity.noContent().build();
 	} 
 	
 	@PatchMapping("/servicios/{id}")
-	public ResponseEntity<Servicio> updateEstadoServ(@PathVariable("id") Integer id, @RequestBody Map<String, Object> cambios) {
+	public ResponseEntity<?> updateEstadoServ(@PathVariable("id") Integer id, @RequestBody Map<String, Object> cambios) {
 		try {
 			if (cambios.containsKey("estadoServicio")) {
 				String nuevoEstado = (String) cambios.get("estadoServicio");
 				Servicio updated = servicioService.updateEstadoServicio(id, nuevoEstado);
 				return ResponseEntity.ok(updated);
 			}
-			return ResponseEntity.badRequest().build();
+			return ResponseEntity.badRequest().body("Campo 'estadoServicio' es requerido");
 		} catch (RuntimeException e) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
 		}
 	}
 }

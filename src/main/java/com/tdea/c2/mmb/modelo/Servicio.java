@@ -24,10 +24,17 @@ public class Servicio {
 	private String estadoServicio;
 	
 	@ManyToOne
-	@JoinColumn(name = "serial")
-	private Equipo equipo; // Relacion con Equipo, un servicio tiene un equipo asignado
+	@JoinColumn(name = "serial", nullable = false)
+	private Equipo equipo;
+
+	@ManyToOne
+	@JoinColumn(name = "usuario_id", referencedColumnName = "num_documento", nullable = false)
+	private Usuario usuario;
+
+	@ManyToOne
+	@JoinColumn(name = "tecnico_doc", referencedColumnName = "num_documento", nullable = false)
+	private Tecnico tecnico;
 	
-	// Constructor vacío (requerido por JPA)
 	public Servicio() {
 	}
 	
@@ -40,7 +47,6 @@ public class Servicio {
 		this.estadoServicio = estadoServicio;
 	}
 	
-	// Getters y Setters
 	public int getIdServicio() {
 		return idServicio;
 	}
@@ -76,6 +82,18 @@ public class Servicio {
 	}
 	public void setEquipo(Equipo equipo) {
 		this.equipo = equipo;
+	}
+	public Usuario getUsuario() {
+		return usuario;
+	}
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+	public Tecnico getTecnico() {
+		return tecnico;
+	}
+	public void setTecnico(Tecnico tecnico) {
+		this.tecnico = tecnico;
 	}
 	
 }
