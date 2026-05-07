@@ -5,6 +5,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.JoinColumn;
 
 @Entity // Convierte la clase en tabla
 @Table(name = "equipo") // Nombre de la tabla
@@ -16,6 +18,10 @@ public class Equipo {
 	private String marca;
 	private String modelo;
 	private String tipo;
+	
+	@ManyToOne
+	@JoinColumn(name = "num_documento")
+	private Usuario usuario; // Relacion con Usuario, un equipo tiene un usuario asignado
 	
 	// Constructor vacio necesario para JPA
 	public Equipo() {
@@ -60,6 +66,14 @@ public class Equipo {
 	
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
+	}
+	
+	public Usuario getUsuario() {
+		return usuario;
+	}
+	
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 
 }

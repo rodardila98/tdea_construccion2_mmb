@@ -1,9 +1,7 @@
 package com.tdea.c2.mmb.controller;
 
 import java.util.List;
-import java.util.Optional;
 
-import java.time.LocalDateTime;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -18,18 +16,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tdea.c2.mmb.modelo.LogsServicios;
-import com.tdea.c2.mmb.repository.ILogsServicioRepository;
+import com.tdea.c2.mmb.service.ILogsServicioService;
 
 @RestController
 @RequestMapping("/api")
 public class LogsServicioController {
 	
 	@Autowired
-	private ILogsServicioRepository logsServicioRepository;
+	private ILogsServicioService logsServicioService;
 	
 	@GetMapping("/logsservicios")
 	public ResponseEntity<List<LogsServicios>> getAllLogsServicios(){
-		List<LogsServicios> logs = logsServicioRepository.findAll();
+		List<LogsServicios> logs = logsServicioService.getAllLogsServicios();
 		if (logs == null || logs.isEmpty()) {
 			return ResponseEntity.noContent().build();
 		}
@@ -38,41 +36,32 @@ public class LogsServicioController {
 
 	@GetMapping("/logsservicios/{id}")
 	public ResponseEntity<LogsServicios> getLogsById(@PathVariable("id") Integer id) {
-		Optional<LogsServicios> opt = logsServicioRepository.findById(id);
-		return ResponseEntity.of(opt);
+		return ResponseEntity.of(logsServicioService.getLogsById(id));
 	}
 
 	@PostMapping("/logsservicios")
 	public ResponseEntity<?> createLogs(@RequestBody LogsServicios logs) {
-		if (logs == null) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("LogsServicios no puede ser nulo");
+		try {
+			LogsServicios saved = logsServicioService.createLogs(logs);
+			return ResponseEntity.status(HttpStatus.CREATED).body(saved);
+		} catch (IllegalArgumentException e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
 		}
-		if (logs.getServicio() == null) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Campo 'servicio' es requerido");
-		}
-		// Establecer fecha de modificación en el momento de creación
-		logs.setFechaModificacion(LocalDateTime.now());
-		LogsServicios saved = logsServicioRepository.save(logs);
-		return ResponseEntity.status(HttpStatus.CREATED).body(saved);
 	}
 
 	@PutMapping("/logsservicios/{id}")
 	public ResponseEntity<LogsServicios> updateLogs(@PathVariable("id") Integer id, @RequestBody LogsServicios cambios) {
-		LogsServicios existente = logsServicioRepository.findById(id)
-				.orElseThrow(() -> new RuntimeException("No encontrado"));
-		existente.setServicio(cambios.getServicio());
-		existente.setFechaServicio(cambios.getFechaServicio());
-		existente.setHoraServicio(cambios.getHoraServicio());
-		existente.setTipoServicio(cambios.getTipoServicio());
-		existente.setEstadoServicio(cambios.getEstadoServicio());
-		existente.setFechaModificacion(LocalDateTime.now());
-		return ResponseEntity.ok(logsServicioRepository.save(existente));
+		try {
+			LogsServicios updated = logsServicioService.updateLogs(id, cambios);
+			return ResponseEntity.ok(updated);
+		} catch (RuntimeException e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+		}
 	}
 
 	@DeleteMapping("/logsservicios/{id}")
 	public ResponseEntity<LogsServicios> deleteLogs(@PathVariable("id") Integer id){
-		logsServicioRepository.deleteById(id);
+		logsServicioService.deleteLogs(id);
 		return ResponseEntity.noContent().build();
 	}
-
 }
