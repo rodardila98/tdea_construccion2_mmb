@@ -7,6 +7,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -16,10 +18,14 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
+import com.tdea.c2.mmb.dto.ServicioCreateRequest;
 import com.tdea.c2.mmb.modelo.Servicio;
-import com.tdea.c2.mmb.modelo.Tecnico;
 import com.tdea.c2.mmb.repository.IServicioRepository;
+import com.tdea.c2.mmb.service.ServicioService;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api")
@@ -27,6 +33,9 @@ public class ServicioController {
 	
 	@Autowired
 	private IServicioRepository servicioRepository;
+	
+	@Autowired
+	private ServicioService servicioService;
 	
 	@GetMapping("/servicios")
 	public ResponseEntity<List<Servicio>> getAllServicios(){
@@ -48,37 +57,46 @@ public class ServicioController {
 	}
 	
 	@PostMapping("/servicios")
-	public ResponseEntity<?> createServicio(@RequestBody Servicio servicio) {
-		if (servicio == null) {
+	public ResponseEntity<?> createServicio(@Valid @RequestBody ServicioCreateRequest request) {
+		if (request == null) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Servicio no puede ser nulo");
 		}
 		// Validaciones muy básicas: tipo y estado son requeridos
-		if (servicio.getTipoServicio() == null || servicio.getTipoServicio().trim().isEmpty()) {
+		if (request.getTipoServicio() == null || request.getTipoServicio().trim().isEmpty()) {
 			
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Campo 'tipoServicio' es requerido");
 		}
-		if (servicio.getEstadoServicio() == null || servicio.getEstadoServicio().trim().isEmpty()) {
+		if (request.getEstadoServicio() == null || request.getEstadoServicio().trim().isEmpty()) {
 			
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Campo 'estadoServicio' es requerido");
 		}
 		// fechaServicio podría validarse más, pero por ahora comprobamos no nulo
-		if (servicio.getFechaServicio() == null) {
+		if (request.getFechaServicio() == null) {
 			
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Campo 'fechaServicio' es requerido");
 		}
-		Servicio saved = servicioRepository.save(servicio);
-		return ResponseEntity.status(HttpStatus.CREATED).body(saved);
+		try {
+			Servicio saved = servicioService.crearServicio(request);
+			return ResponseEntity.status(HttpStatus.CREATED).body(saved);
+		} catch (ResponseStatusException ex) {
+			return ResponseEntity.status(ex.getStatusCode()).body(ex.getReason());
+		}
 	}
 	
 	@PutMapping("/servicios/{id}")
 	public ResponseEntity<Servicio> updateTecnico(@PathVariable("id") Integer id, @RequestBody Servicio servicios) {
 		Servicio existente = servicioRepository.findById(id)
             .orElseThrow(() -> new RuntimeException("No encontrado"));
-		existente.setIdServicio(servicios.getIdServicio());
 		existente.setFechaServicio(servicios.getFechaServicio());
 		existente.setHoraServicio(servicios.getHoraServicio());
 		existente.setTipoServicio(servicios.getTipoServicio());
 		existente.setEstadoServicio(servicios.getEstadoServicio());
+		if (servicios.getCliente() != null) {
+			existente.setCliente(servicios.getCliente());
+		}
+		if (servicios.getTecnico() != null) {
+			existente.setTecnico(servicios.getTecnico());
+		}
 		return ResponseEntity.ok(servicioRepository.save(existente));
 	}
 	
@@ -99,5 +117,13 @@ public class ServicioController {
 
     return ResponseEntity.ok(servicioRepository.save(existente));
 
+	}
+	
+	@ExceptionHandler(MethodArgumentNotValidException.class)
+	public ResponseEntity<String> handleValidationException(MethodArgumentNotValidException ex) {
+		String errorMessage = ex.getBindingResult().getFieldError() != null
+				? ex.getBindingResult().getFieldError().getDefaultMessage()
+				: "Solicitud inválida";
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage);
 	}
 }
