@@ -7,6 +7,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonCreator;
 
 @Entity
 @Table(name = "usuario")
@@ -26,6 +27,12 @@ public class Usuario {
 	
 	public Usuario() {
 		
+	}
+    
+	// Allow Jackson to deserialize a numeric usuario reference (e.g. "usuario": 14567890)
+	@JsonCreator(mode = JsonCreator.Mode.DELEGATING)
+	public Usuario(Integer numDocumento) {
+		this.numDocumento = numDocumento;
 	}
 	
 	public Usuario(String tipoDocumento, Integer numDocumento, String nombreCompleto, String direccion, String barrio,

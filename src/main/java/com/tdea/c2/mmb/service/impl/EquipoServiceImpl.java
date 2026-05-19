@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.tdea.c2.mmb.modelo.Equipo;
+import com.tdea.c2.mmb.modelo.Usuario;
+import com.tdea.c2.mmb.repository.IUsuarioRepository;
 import com.tdea.c2.mmb.repository.IEquipoRepository;
 import com.tdea.c2.mmb.service.IEquipoService;
 
@@ -15,6 +17,9 @@ public class EquipoServiceImpl implements IEquipoService {
 
 	@Autowired
 	private IEquipoRepository equipoRepository;
+
+	@Autowired
+	private IUsuarioRepository usuarioRepository;
 
 	@Override
 	public List<Equipo> getAllEquipos() {
@@ -29,6 +34,13 @@ public class EquipoServiceImpl implements IEquipoService {
 	@Override
 	public Equipo createEquipo(Equipo equipo) {
 		validarEquipo(equipo);
+		// If the incoming payload provided only a usuario id (deserialized via @JsonCreator),
+		// replace it with a managed Usuario from the DB to avoid inserting a transient Usuario.
+		if (equipo.getUsuario() != null && equipo.getUsuario().getNumDocumento() != null) {
+			Integer doc = equipo.getUsuario().getNumDocumento();
+			Usuario usuario = usuarioRepository.findById(doc).orElse(null);
+			equipo.setUsuario(usuario);
+		}
 		return equipoRepository.save(equipo);
 	}
 
