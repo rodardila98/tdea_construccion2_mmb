@@ -29,11 +29,12 @@ public class Equipo {
 	}
 	
 	// Constructor con parametros
-	public Equipo(Long  serial, String marca, String modelo, String tipo) {
+	public Equipo(Long  serial, String marca, String modelo, String tipo, Usuario usuario) {
 		this.serial = serial;
 		this.marca = marca;
 		this.modelo = modelo;
 		this.tipo = tipo;
+		this.usuario = usuario;
 	}
 	
 	public Long getSerial() {
