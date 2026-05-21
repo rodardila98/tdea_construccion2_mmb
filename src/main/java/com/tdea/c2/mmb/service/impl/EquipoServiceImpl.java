@@ -79,5 +79,8 @@ public class EquipoServiceImpl implements IEquipoService {
 		if (equipo.getTipo() == null || equipo.getTipo().trim().isEmpty()) {
 			throw new IllegalArgumentException("Campo 'tipo' es requerido");
 		}
+		if (equipo.getUsuario() == null || equipo.getUsuario().getNumDocumento() == null) {
+			throw new IllegalArgumentException("Campo 'usuario' es requerido");
 	}
+		}
 }
