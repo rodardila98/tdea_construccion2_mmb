@@ -27,6 +27,22 @@ public class Equipo {
 	public Equipo() {
 		
 	}
+    
+	// Permitir que Jackson construya un Equipo cuando en el JSON venga solo el id
+	// e.g. "equipo": "12345" o "equipo": 12345
+	@com.fasterxml.jackson.annotation.JsonCreator
+	public Equipo(Object id) {
+		if (id == null) return;
+		if (id instanceof Number) {
+			this.serial = ((Number) id).longValue();
+		} else {
+			try {
+				this.serial = Long.valueOf(id.toString());
+			} catch (NumberFormatException e) {
+				// dejar serial nulo si no se puede convertir
+			}
+		}
+	}
 	
 	// Constructor con parametros
 	public Equipo(Long  serial, String marca, String modelo, String tipo, Usuario usuario) {
