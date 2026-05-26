@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,7 +19,9 @@ import com.tdea.c2.mmb.modelo.Equipo;
 import com.tdea.c2.mmb.service.IEquipoService;
 
 @RestController //Cualquier método retorna en http json
-@RequestMapping("/api") //Asigna las solicitudes http a métodos dentro del controlador 
+@RequestMapping("/api") //Asigna las solicitudes http a métodos dentro del controlador
+@CrossOrigin(origins ="http://127.0.0.1:5500/")
+
 public class EquipoController {
 	
 	@Autowired //Crea un objeto @Repository en este caso y lo inyecta aquí

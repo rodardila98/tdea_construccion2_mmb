@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +20,8 @@ import com.tdea.c2.mmb.service.IUsuarioService;
 
 @RestController
 @RequestMapping("/api")
+@CrossOrigin(origins ="http://127.0.0.1:5500/")
+
 public class UsuarioController {
 	
 	@Autowired
@@ -41,6 +44,15 @@ public class UsuarioController {
 		
 		return ResponseEntity.of(usuarioService.getUsuarioById(id));
 	}
+	
+	
+//PRUEBA CONEXIÓN FRONT
+//@PostMapping("/usuarios")
+//public String crearUsuario(@RequestBody Usuario usuario) {
+    //System.out.println("Usuario recibido ✅");
+   // return "OK";
+//}
+
 	
 	@PostMapping("/usuarios")
 	public ResponseEntity<?> createUsuario(@RequestBody Usuario usuario) {
