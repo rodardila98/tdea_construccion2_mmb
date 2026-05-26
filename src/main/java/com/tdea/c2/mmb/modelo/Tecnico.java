@@ -24,22 +24,6 @@ public class Tecnico {
 	public Tecnico() {
 		
 	}
-    
-	// Permitir que Jackson construya un Tecnico cuando en el JSON venga solo el id
-	// e.g. "tecnico": "11111111" o "tecnico": 11111111
-	@com.fasterxml.jackson.annotation.JsonCreator
-	public Tecnico(Object id) {
-		if (id == null) return;
-		if (id instanceof Number) {
-			this.numDocumento = ((Number) id).intValue();
-		} else {
-			try {
-				this.numDocumento = Integer.valueOf(id.toString());
-			} catch (NumberFormatException e) {
-				// dejar numDocumento nulo si no se puede convertir
-			}
-		}
-	}
 	
 	public Tecnico(String tipoDocumento, Integer numDocumento, String nombreCompleto, Long numCel, String especialidad, 
 			String estadoTecnico) {
