@@ -11,10 +11,10 @@ import com.tdea.c2.mmb.modelo.Usuario;
 import com.tdea.c2.mmb.modelo.Tecnico;
 import com.tdea.c2.mmb.modelo.Equipo;
 import com.tdea.c2.mmb.repository.IServicioRepository;
+import com.tdea.c2.mmb.repository.IUsuarioRepository;
+import com.tdea.c2.mmb.repository.ITecnicoRepository;
+import com.tdea.c2.mmb.repository.IEquipoRepository;
 import com.tdea.c2.mmb.service.IServicioService;
-import com.tdea.c2.mmb.service.IUsuarioService;
-import com.tdea.c2.mmb.service.ITecnicoService;
-import com.tdea.c2.mmb.service.IEquipoService;
 
 @Service
 public class ServicioServiceImpl implements IServicioService {
@@ -23,13 +23,13 @@ public class ServicioServiceImpl implements IServicioService {
 	private IServicioRepository servicioRepository;
 	
 	@Autowired
-	private IUsuarioService usuarioService;
+	private IUsuarioRepository usuarioRepository;
 	
 	@Autowired
-	private ITecnicoService tecnicoService;
+	private ITecnicoRepository tecnicoRepository;
 	
 	@Autowired
-	private IEquipoService equipoService;
+	private IEquipoRepository equipoRepository;
 
 	@Override
 	public List<Servicio> getAllServicios() {
@@ -118,9 +118,10 @@ public class ServicioServiceImpl implements IServicioService {
 			throw new IllegalArgumentException("El usuario es requerido y debe incluir el número de documento");
 		}
 		
-		Usuario usuario = usuarioService.getUsuarioById(servicio.getUsuario().getNumDocumento())
+		Integer doc = servicio.getUsuario().getNumDocumento();
+		Usuario usuario = usuarioRepository.findById(doc)
 			.orElseThrow(() -> new IllegalArgumentException(
-				"Usuario no encontrado con ID: " + servicio.getUsuario().getNumDocumento()));
+				"Usuario no encontrado con ID: " + doc));
 		
 		servicio.setUsuario(usuario);
 	}
@@ -130,9 +131,10 @@ public class ServicioServiceImpl implements IServicioService {
 			throw new IllegalArgumentException("El técnico es requerido y debe incluir el número de documento");
 		}
 		
-		Tecnico tecnico = tecnicoService.getTecnicoById(servicio.getTecnico().getNumDocumento())
+		Integer doc = servicio.getTecnico().getNumDocumento();
+		Tecnico tecnico = tecnicoRepository.findById(doc)
 			.orElseThrow(() -> new IllegalArgumentException(
-				"Técnico no encontrado con ID: " + servicio.getTecnico().getNumDocumento()));
+				"Técnico no encontrado con ID: " + doc));
 		
 		servicio.setTecnico(tecnico);
 	}
@@ -142,9 +144,10 @@ public class ServicioServiceImpl implements IServicioService {
 			throw new IllegalArgumentException("El equipo es requerido y debe incluir el número de serie");
 		}
 		
-		Equipo equipo = equipoService.getEquipoById(servicio.getEquipo().getSerial())
+		Long serial = servicio.getEquipo().getSerial();
+		Equipo equipo = equipoRepository.findById(serial)
 			.orElseThrow(() -> new IllegalArgumentException(
-				"Equipo no encontrado con serial: " + servicio.getEquipo().getSerial()));
+				"Equipo no encontrado con serial: " + serial));
 		
 		servicio.setEquipo(equipo);
 	}

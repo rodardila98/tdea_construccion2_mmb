@@ -7,6 +7,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.JoinColumn;
+import com.fasterxml.jackson.annotation.JsonCreator;
 
 @Entity // Convierte la clase en tabla
 @Table(name = "equipo") // Nombre de la tabla
@@ -26,6 +27,12 @@ public class Equipo {
 	// Constructor vacio necesario para JPA
 	public Equipo() {
 		
+	}
+	
+	// Allow Jackson to deserialize a numeric equipo reference (e.g. "equipo": 123456)
+	@JsonCreator(mode = JsonCreator.Mode.DELEGATING)
+	public Equipo(Long serial) {
+		this.serial = serial;
 	}
 	
 	// Constructor con parametros
