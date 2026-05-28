@@ -7,6 +7,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.JoinColumn;
+import com.fasterxml.jackson.annotation.JsonCreator;
 
 @Entity // Convierte la clase en tabla
 @Table(name = "equipo") // Nombre de la tabla
@@ -27,21 +28,11 @@ public class Equipo {
 	public Equipo() {
 		
 	}
-    
-	// Permitir que Jackson construya un Equipo cuando en el JSON venga solo el id
-	// e.g. "equipo": "12345" o "equipo": 12345
-	@com.fasterxml.jackson.annotation.JsonCreator
-	public Equipo(Object id) {
-		if (id == null) return;
-		if (id instanceof Number) {
-			this.serial = ((Number) id).longValue();
-		} else {
-			try {
-				this.serial = Long.valueOf(id.toString());
-			} catch (NumberFormatException e) {
-				// dejar serial nulo si no se puede convertir
-			}
-		}
+	
+	// Allow Jackson to deserialize a numeric equipo reference (e.g. "equipo": 123456)
+	@JsonCreator(mode = JsonCreator.Mode.DELEGATING)
+	public Equipo(Long serial) {
+		this.serial = serial;
 	}
 	
 	// Constructor con parametros

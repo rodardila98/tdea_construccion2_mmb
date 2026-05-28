@@ -54,6 +54,13 @@ public class EquipoServiceImpl implements IEquipoService {
 		existente.setModelo(equipo.getModelo());
 		existente.setTipo(equipo.getTipo());
 		
+		// Deserializar Usuario si se envía
+		if (equipo.getUsuario() != null && equipo.getUsuario().getNumDocumento() != null) {
+			Integer doc = equipo.getUsuario().getNumDocumento();
+			Usuario usuario = usuarioRepository.findById(doc).orElse(null);
+			existente.setUsuario(usuario);
+		}
+		
 		return equipoRepository.save(existente);
 	}
 
